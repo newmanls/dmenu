@@ -3,16 +3,23 @@
 
 static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
 /* -fn option overrides fonts[0]; default X11 font or font set */
+static char font[] = "monospace:size=10";
 static const char *fonts[] = {
-    "Iosevka Nerd Font-9",
+    font,
     "Noto Color Emoji-9"
 };
-static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
-static const char *colors[SchemeLast][2] = {
+
+static char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
+
+static char normfgcolor[] = "#bbbbbb";
+static char normbgcolor[] = "#222222";
+static char selfgcolor[]  = "#eeeeee";
+static char selbgcolor[]  = "#005577";
+static char *colors[SchemeLast][2] = {
     /*     fg         bg       */
-    [SchemeNorm] = { "#c0caf5", "#1a1b26" },
-    [SchemeSel] = { "#bb9af7", "#24283b" },
-    [SchemeOut] = { "#c0caf5", "#24283b" },
+	[SchemeNorm] = { normfgcolor, normbgcolor },
+	[SchemeSel]  = { selfgcolor,  selbgcolor  },
+	[SchemeOut]  = { "#000000",   "#00ffff" },
 };
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines      = 0;
@@ -22,3 +29,15 @@ static unsigned int lines      = 0;
  * for example: " /?\"&[]"
  */
 static const char worddelimiters[] = " ";
+
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {
+	{ "font",        STRING, &font },
+	{ "prompt",      STRING, &prompt },
+	{ "background",  STRING, &normbgcolor },
+	{ "foreground",  STRING, &normfgcolor },
+	{ "color0",      STRING, &selbgcolor },
+	{ "accentColor", STRING, &selfgcolor },
+};
